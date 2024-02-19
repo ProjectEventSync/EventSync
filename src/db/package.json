@@ -1,0 +1,11 @@
+{
+  "name": "event-sync-db",
+  "version": "1.0.0",
+  "description": "Event Sync DB Functions",
+  "main": "index.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "author": "",
+  "license": "ISC"
+}
