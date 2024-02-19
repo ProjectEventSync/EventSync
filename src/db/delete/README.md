@@ -1,0 +1,1 @@
+Contains functions for deleting documents in the DB

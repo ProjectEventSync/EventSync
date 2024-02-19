@@ -1,0 +1,1 @@
+Contains utility functions for interacting with the database. (eg. creating snowflake IDs, creating timestamps, etc.)
