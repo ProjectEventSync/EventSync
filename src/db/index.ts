@@ -13,6 +13,10 @@ export * from './create/meetup';
 export * from './read/user';
 export * from './read/meetup';
 
+// Update
+export * from './update/user';
+export * from './update/meetup';
+
 // Delete
 export * from './delete/user';
 export * from './delete/meetup';
