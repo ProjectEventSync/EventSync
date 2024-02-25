@@ -6,11 +6,12 @@ class Meetup {
     title: string;
     creator: string; // User id
     description: string;
-    date: string;
+    date: Date;
+    image: string; // URL
     location: string;
     attendees: string[] = []; // Array of user ids
 
-    constructor(title: string, description: string, date: string, location: string, creator: string, attendees?: string[], _id?: string) {
+    constructor(title: string, description: string, date: Date, location: string, creator: string, attendees?: string[], _id?: string, image?: string) {
         this._id = _id? _id : generateSnowflake();
         this.title = title;
         this.description = description;
@@ -18,6 +19,7 @@ class Meetup {
         this.location = location;
         this.creator = creator;
         this.attendees = attendees ? attendees : [];
+        this.image = image ? image : "https://via.placeholder.com/150";
     }
 
     // Converts a JSON object to a Meetup instance
@@ -29,7 +31,8 @@ class Meetup {
             json.location,
             json.creator,
             json.attendees,
-            json._id
+            json._id,
+            json.image
         );
     }
 
@@ -42,7 +45,8 @@ class Meetup {
             description: this.description,
             date: this.date,
             location: this.location,
-            attendees: this.attendees
+            attendees: this.attendees,
+            image: this.image
         };
     }
 }
