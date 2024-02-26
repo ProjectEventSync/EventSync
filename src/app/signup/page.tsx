@@ -1,3 +1,4 @@
+"use client";
 import { useState } from 'react';
 import { ArrowLongRightIcon, AtSymbolIcon, UserCircleIcon, LockClosedIcon } from "@heroicons/react/24/solid";
 
@@ -35,7 +36,7 @@ export default function Signup() {
         height: '24px',
         color: 'E0E0E0',
     };
-    
+
 
     const buttonStyle = {
         width: '100%',

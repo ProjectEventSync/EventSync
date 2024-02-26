@@ -28,7 +28,7 @@ export default function Home() {
 
     return (
         <div className="no-scrollbar h-screen flex flex-col overflow-y-scroll w-screen bg-neutral-100 p-dark:bg-black">
-            <MeetupCard meetup={defaultMeetup} creator={defaultUser} />
+            <MeetupCard meetup={defaultMeetup} creator={defaultUser}/>
         </div>
     );
 
