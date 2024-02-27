@@ -8,14 +8,16 @@ class User {
     password: string;
     meetups: string[] = []; // Array of meetup ids
     avatar: string; // URL to the user's avatar
+    theme: "light" | "dark" | "system" = "system"; // User's preferred theme
 
-    constructor(username: string, email: string, password: string, meetups?: string[], _id?: string, avatar?: string) {
+    constructor(username: string, email: string, password: string, meetups?: string[], _id?: string, avatar?: string, theme?: "light" | "dark" | "system") {
         this._id = _id ? _id : generateSnowflake();
         this.username = username;
         this.email = email;
         this.password = password;
         this.meetups = meetups ? meetups : [];
         this.avatar = avatar ? avatar : "https://www.gravatar.com/avatar/";
+        this.theme = theme? theme : "system";
     }
 
     // Converts a JSON object to a User instance
@@ -25,7 +27,9 @@ class User {
             json.email,
             json.password,
             json.meetups,
-            json._id
+            json._id,
+            json.avatar,
+            json.theme
         );
     }
 
@@ -36,7 +40,9 @@ class User {
             username: this.username,
             email: this.email,
             password: this.password,
-            meetups: this.meetups
+            meetups: this.meetups,
+            avatar: this.avatar,
+            theme: this.theme
         };
     }
 }

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import detectTheme from "@/app/components/utils/theme/detectTheme";
 
 export default function useTheme(){
+    // TODO: Use DB instead of local storage to store theme
     // Get the current theme from local storage or default to system
     let [theme, setTheme] = useState(localStorage.getItem("theme") || "system");
     let [systemTheme, setSystemTheme] = useState("");
