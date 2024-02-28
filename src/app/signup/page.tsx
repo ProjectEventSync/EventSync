@@ -10,106 +10,63 @@ export default function Signup() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('submit');
     };
-
-    const inputStyle = {
-        width: '100%',
-        padding: '12px 15px',
-        paddingLeft: '45px',
-        borderRadius: '5px',
-        filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.10))',
-        masktype: 'ALPHA',
-        marginBottom: '10px',
-        fontSize: '16px',
-        position: 'relative',
-        fontfamily: 'Inter, sans-serif',
-        color: 'black',
-    };
-
-    const iconStyle = {
-        position: 'absolute',
-        left: '12.5px',
-        top: '50%',
-        transform: 'translateY(-70%)',
-        width: '24px',
-        height: '24px',
-        color: 'E0E0E0',
-    };
-
-
-    const buttonStyle = {
-        width: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: 'rgba(37, 99, 235, 1)',
-        filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.10))',
-        masktype: 'ALPHA',
-        color: 'white',
-        padding: '12px 15px',
-        borderRadius: '5px',
-        border: 'none',
-        cursor: 'pointer',
-        fontSize: '16px'
-    };
-
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', fontFamily: 'Inter, sans-serif' }}>
-            <div style={{ width: '450px', padding: '24px' }}>
-                <h2 style={{ color: 'black', textAlign: 'left', fontSize: '24px', fontWeight: '600', marginBottom: '5px' }}>Sign Up</h2>
-                <p style={{ color: '#BDBDBD', textAlign: 'left', fontSize: '14px', marginBottom: '10px' }}>
+        <div className="flex justify-center items-center h-screen font-inter">
+            <div className="w-[450px] p-6">
+                <h2 className="text-black text-left text-3xl font-semibold mb-2">Sign Up</h2>
+                <p className="text-gray-400 text-left text-sm mb-4">
                     Already have an account?{' '}
-                    <a style={{ textDecoration: 'underline', color: '#2196F3' }} href='https://google.com/'>Login</a>
+                    <a className="underline text-blue-500" href='https://google.com/'>Login</a>
                 </p>
                 <form onSubmit={handleSubmit}>
-                    <div style={{ position: 'relative' }}>
+                    <div className="relative mb-[10px]">
                         <input
                             type="email"
                             placeholder="Email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
-                            style={inputStyle}
+                            className="w-full px-6 py-[14px] pl-12 rounded filter drop-shadow-md text-black text-sm"
                         />
-                        <AtSymbolIcon style={iconStyle} />
+                        <AtSymbolIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" />
                     </div>
-                    <div style={{ position: 'relative' }}>
+                    <div className="relative mb-[10px]">
                         <input
                             type="text"
                             placeholder="Username"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             required
-                            style={inputStyle}
+                            className="w-full px-6 py-[14px] pl-12 rounded filter drop-shadow-md text-black text-sm"
                         />
-                        <UserCircleIcon style={iconStyle} />
+                        <UserCircleIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" />
                     </div>
-                    <div style={{ position: 'relative' }}>
+                    <div className="relative mb-[10px]">
                         <input
                             type="password"
                             placeholder="Password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
-                            style={inputStyle}
+                            className="w-full px-6 py-[14px] pl-12 rounded filter drop-shadow-md text-black text-sm"
                         />
-                        <LockClosedIcon style={iconStyle} />
+                        <LockClosedIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" />
                     </div>
-                    <div style={{ position: 'relative' }}>
+                    <div className="relative mb-[10px]">
                         <input
                             type="password"
                             placeholder="Confirm Password"
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             required
-                            style={inputStyle}
+                            className="w-full px-6 py-[14px] pl-12 rounded filter drop-shadow-md text-black text-sm"
                         />
-                        <LockClosedIcon style={iconStyle} />
+                        <LockClosedIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" />
                     </div>
-                    <button type="submit" style={buttonStyle}>
-                        Signup <ArrowLongRightIcon style={{ marginLeft: '15px', width: '24px', height: '24px' }} />
+                    <button type="submit" className="w-full flex items-center justify-center bg-blue-500 filter drop-shadow-md text-white px-4 py-3 rounded mb-[10px] cursor-pointer text-base">
+                        Signup <ArrowLongRightIcon className="ml-4 w-6 h-6" />
                     </button>
                 </form>
             </div>
