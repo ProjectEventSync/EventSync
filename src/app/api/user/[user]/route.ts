@@ -1,5 +1,3 @@
-// TODO: Implement API routes for user - GET (read), PUT (update), DELETE (delete)
-
 import {NextRequest, NextResponse} from "next/server";
 import { getUser } from "@/db/read/user";
 import { updateUser } from "@/db/update/user";
