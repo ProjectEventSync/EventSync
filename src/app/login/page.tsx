@@ -8,6 +8,7 @@ export default function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
     };
 
     return (
@@ -16,7 +17,7 @@ export default function Login() {
                 <h2 className="text-black text-left text-3xl font-semibold mb-2">Log In</h2>
                 <p className="text-gray-400 text-left text-sm mb-4">
                     Don&apos;t have an account?{' '}
-                    <a className="underline text-blue-500" href='https://google.com/'>Sign Up</a>
+                    <a className="underline text-blue-500" href='/signup'>Sign Up</a>
                 </p>
                 <form onSubmit={handleSubmit}>
                     <div className="relative mb-2">
