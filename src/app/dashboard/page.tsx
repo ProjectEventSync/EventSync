@@ -29,17 +29,17 @@ export default function Dashboard() {
             <Sidebar user={defaultUser} active="dashboard"/>
             <div className="flex flex-col h-full w-full p-4">
                 <h1 className="text-2xl mb-4 dark:text-white text-black font-bold">Dashboard</h1>
-                <div className="flex flex-row w-full h-full">
-                    <div className="flex flex-col p-4 bg-neutral-100 rounded-md dark:bg-neutral-950 border dark:border-neutral-900 w-1/2 h-full">
-                        <p className="uppercase dark:text-neutral-400 mb-4">Your Meetups</p>
+                <div className="flex flex-col xl:flex-row w-full h-full">
+                    <div className="flex flex-col p-4 bg-neutral-100 rounded-md dark:bg-neutral-950 border dark:border-neutral-900 w-full xl:w-1/2 h-full">
+                        <p className="uppercase dark:text-neutral-500 mb-4">Meetups</p>
                         <MeetupCard meetup={defaultMeetup} creator={defaultUser}/>
                     </div>
-                    <div className="flex flex-col w-1/2 h-full ml-4">
+                    <div className="flex flex-col w-full xl:mt-0 mt-4 xl:w-1/2 h-full xl:ml-4">
                         <div className="flex flex-col p-4 rounded-md dark:bg-neutral-950 border bg-neutral-100 dark:border-neutral-900 h-1/2">
-                            <p className="uppercase dark:text-neutral-400 mb-4">Your Friends</p>
+                            <p className="uppercase dark:text-neutral-500 mb-4">Friends</p>
                         </div>
                         <div className="flex flex-col p-4 rounded-md dark:bg-neutral-950 border bg-neutral-100 dark:border-neutral-900 h-1/2 mt-4">
-                            <p className="uppercase dark:text-neutral-400 mb-4">Your Notifications</p>
+                            <p className="uppercase dark:text-neutral-500 mb-4">Notifications</p>
                         </div>
                     </div>
 
