@@ -7,7 +7,6 @@ export default function MeetupCard({ meetup, creator }: { meetup: Meetup, creato
 
 
     return (
-        <div className="h-full w-full bg-neutral-100 p-4 dark:bg-black">
             <div className="transition-all rounded-m group dark:hover:bg-neutral-800 flex h-auto w-full flex-row rounded-lg p-4 bg-white hover:bg-neutral-50 dark:bg-neutral-900">
                 <img src={ meetup.image } className="hover:opacity-90 flex-0 aspect-square w-32 rounded-lg" />
                 <div className="ml-4 flex flex-grow flex-col justify-between">
@@ -33,7 +32,6 @@ export default function MeetupCard({ meetup, creator }: { meetup: Meetup, creato
                     </div>
                 </div>
             </div>
-        </div>
     )
 }
 
