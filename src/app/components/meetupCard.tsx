@@ -18,16 +18,16 @@ export default function MeetupCard({ meetup, creator }: { meetup: Meetup, creato
 
                     <div className="mt-4 flex justify-between flex-row">
                         <div className="flex flex-row rounded-full dark:bg-neutral-800 dark:group-hover:bg-neutral-900 bg-neutral-100 dark:border-gray-700 border-gray-200 p-2 border ">
-                            <UserGroupIcon className="h-6 w-6 text-neutral-300" />
-                            <p className="text-sm mt-0.5 ml-2 font-semibold dark:text-neutral-300 text-neutral-400">{ meetup.attendees.length }</p>
+                            <UserGroupIcon className="h-5 w-5 text-neutral-300" />
+                            <p className="text-xs mt-0.5 ml-2 font-semibold dark:text-neutral-300 text-neutral-400">{ meetup.attendees.length }</p>
                         </div>
                         <div className="flex flex-row rounded-full dark:bg-neutral-800 dark:group-hover:bg-neutral-900 bg-neutral-100 dark:border-gray-700 border-gray-200 p-2 border ">
-                            <ClockIcon className="h-6 w-6 text-neutral-300" />
-                            <p className="text-sm ml-2 mt-0.5 font-semibold dark:text-neutral-300 text-neutral-400">{ startTime }</p>
+                            <ClockIcon className="h-5 w-5 text-neutral-300" />
+                            <p className="text-xs ml-2 mt-0.5 font-semibold dark:text-neutral-300 text-neutral-400">{ startTime }</p>
                         </div>
                         <div className="flex flex-row rounded-full dark:bg-neutral-800 dark:group-hover:bg-neutral-900 bg-neutral-100 dark:border-gray-700 border-gray-200 p-2 border ">
-                            <CalendarIcon className="h-6 w-6 text-neutral-300" />
-                            <p className="text-sm ml-2 mt-0.5 font-semibold dark:text-neutral-300 text-neutral-400">{ startDate }</p>
+                            <CalendarIcon className="h-5 w-5 text-neutral-300" />
+                            <p className="text-xs ml-2 mt-0.5 font-semibold dark:text-neutral-300 text-neutral-400">{ startDate }</p>
                         </div>
                     </div>
                 </div>

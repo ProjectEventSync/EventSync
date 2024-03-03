@@ -4,10 +4,12 @@ import type { NextRequest } from 'next/server'
 export function middleware(request: NextRequest) {
     const currentUID = request.cookies.get('_id')?.value
 
-    if (currentUID) {
-        return NextResponse.redirect(new URL('/dashboard', request.url))
+    if (request.url in ['/dashboard', '/signout', '/friends', '/meetups', '/notifications', '/settings'] || request.url.includes('/meetups')) {
+        if (!currentUID) {
+            return NextResponse.redirect(new URL('/login', request.url))
+        }
+
     }
-    return NextResponse.redirect(new URL('/login', request.url))
 }
 
 export const config = {
