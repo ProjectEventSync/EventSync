@@ -47,4 +47,10 @@ class User {
     }
 }
 
-export {User};
+const defaultUser = new User(
+    "John Doe",
+    "johndoe@eventsync.app",
+    "password",
+);
+
+export {User, defaultUser};

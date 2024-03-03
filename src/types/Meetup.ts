@@ -1,4 +1,5 @@
 import {generateSnowflake} from "../db/utils/snowflake";
+import {defaultUser} from "./User";
 
 // TODO: Decide on the fields for a Meetup
 class Meetup {
@@ -51,4 +52,15 @@ class Meetup {
     }
 }
 
-export {Meetup};
+const defaultMeetup = new Meetup(
+    "Meetup Title",
+    "Meetup Description",
+    new Date("2022-12-12T12:00:00Z"),
+    "none",
+    defaultUser._id,
+    [defaultUser._id],
+    undefined,
+    "https://d3mvlb3hz2g78.cloudfront.net/wp-content/uploads/2017/04/thumb_720_450_Alpsdreamstime_xl_45054687.jpg"
+);
+
+export {Meetup, defaultMeetup};

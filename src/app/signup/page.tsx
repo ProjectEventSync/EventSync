@@ -10,7 +10,7 @@ export default function Signup() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [theme, setTheme] = useTheme();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
     };
 
