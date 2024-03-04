@@ -1,13 +1,17 @@
-// TODO: Implement API routes for login - POST (create)
 import dotenv from 'dotenv';
 dotenv.config({ path: '.env.local' });
 
-import {NextRequest, NextResponse} from 'next/server';
-import {getUser} from '@/db/read/user';
+import { NextRequest, NextResponse } from 'next/server';
+import { getUser } from '@/db/read/user';
 import jwt from "jsonwebtoken";
+import * as bcrypt from 'bcrypt';
+
+async function checkPassword(password: string, hashedPassword: string): Promise<boolean> { //pass check func
+    return await bcrypt.compare(password, hashedPassword);
+}
 
 export async function POST(request: NextRequest) {
-    const {username, password} = await request.json();
+    const { username, password } = await request.json();
 
     let user = await getUser(undefined, username); // Check if email exists
 
@@ -15,13 +19,15 @@ export async function POST(request: NextRequest) {
         user = await getUser(undefined, undefined, username); // Check if username exists
 
         if (!user) {
-            return NextResponse.json({"error": "User not found"}); // If neither email nor username exists, return error
+            return NextResponse.json({ "error": "User not found" }); // If neither email nor username exists, return error
         }
     }
 
-    // TODO: Implement password hashing and password checking @Gam3rr
-    if (user.password !== password) {
-        return NextResponse.json({"error": "Password incorrect"})
+    const hashedPassword = user.password; //get pass
+
+    const passwordMatch = await checkPassword(password, hashedPassword); //pass check
+    if (!passwordMatch) {
+        return NextResponse.json({ "error": "Password incorrect" });
     }
 
     // Ensure JWT_SECRET is defined
@@ -29,9 +35,10 @@ export async function POST(request: NextRequest) {
         throw new Error('JWT_SECRET is not defined');
     }
 
+    // Generate JWT token
     const token = jwt.sign({ userID: user._id, type: 'user' }, process.env.JWT_SECRET, {
         expiresIn: '100m',
-    })
+    });
 
     return NextResponse.json({ "token": token });
 }
