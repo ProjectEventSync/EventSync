@@ -2,9 +2,23 @@ import {NextRequest, NextResponse} from "next/server";
 import { getUser } from "@/db/read/user";
 import { updateUser } from "@/db/update/user";
 import { deleteUser } from "@/db/delete/user";
+import {headers} from "next/headers";
+import verifyJWT from "@/app/api/utils/verifyJWT";
 
 export async function GET({ params } : {params: {user: string}}) {
-    const user = await getUser(params.user); // Get user data by ID (user param is the user's ID)
+    // Make sure request is authorized
+
+    console.log(params.user);
+    const headersInstance = headers()
+    const authorization = headersInstance.get('authorization');
+    const data = verifyJWT(authorization);
+    if ("error" in data) {
+        return NextResponse.json({error: data.error})
+    }
+    if (data.type == "api"){
+        // Do additional checks for scopes
+    }
+    const user = await getUser(params.user, undefined, undefined); // Get user data by ID (user param is the user's ID)
 
     if (!user) {
         return new Error("User not found");

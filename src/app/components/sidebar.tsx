@@ -75,7 +75,7 @@ export default function Sidebar({ active, user } : { active: string, user: User 
                 </div>
             </div>
 
-            {tooltip && <UserTooltip hideTooltip={hideUserTooltip} />}
+            {tooltip && <UserTooltip user={user} hideTooltip={hideUserTooltip} />}
             <div className="lg:absolute lg:bottom-0 border-t p-4 justify-center flex flex-row border-neutral-200 dark:border-neutral-800 w-full max-h-18 dark:bg-neutral-900 bg-neutral-100">
                 <img src={user.avatar} onClick={showUserTooltip} className="w-10 h-10 rounded-full hover:opacity-90"/>
                 <div className="hidden lg:block ml-4 flex flex-col h-full overflow-ellipsis">

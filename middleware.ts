@@ -1,17 +1,18 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import Cookies from 'js-cookie';
 
-export function middleware(request: NextRequest) {
-    const currentUID = request.cookies.get('_id')?.value
+export async function middleware(request: NextRequest) {
+    const token = Cookies.get('token');
 
-    if (request.url in ['/dashboard', '/signout', '/friends', '/meetups', '/notifications', '/settings'] || request.url.includes('/meetups')) {
-        if (!currentUID) {
-            return NextResponse.redirect(new URL('/login', request.url))
-        }
 
+    if (!token) {
+        return NextResponse.redirect(new URL('/login', request.url));
     }
+
+    return NextResponse.next();
 }
 
 export const config = {
-    matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
+    matcher: ['/dashboard', '/signout', '/friends', '/meetups', '/notifications', '/settings', '/meetups/*'],
 }

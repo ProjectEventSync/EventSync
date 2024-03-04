@@ -5,10 +5,13 @@ import detectTheme from "@/app/components/utils/theme/detectTheme";
 export default function useTheme(){
     // TODO: Use DB instead of local storage to store theme
     // Get the current theme from local storage or default to system
-    let [theme, setTheme] = useState(localStorage.getItem("theme") || "system");
+    let [theme, setTheme] = useState("system");
     let [systemTheme, setSystemTheme] = useState("");
 
     // Update the theme in the DOM
+    useEffect(() => {
+        setTheme(localStorage.getItem("theme") || "system");
+    }, []);
 
     useEffect(() => {
         const root = window.document.documentElement;
