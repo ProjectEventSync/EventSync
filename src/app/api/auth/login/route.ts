@@ -4,16 +4,12 @@ dotenv.config({ path: '.env.local' });
 import { NextRequest, NextResponse } from 'next/server';
 import { getUser } from '@/db/read/user';
 import jwt from "jsonwebtoken";
-import * as bcrypt from 'bcrypt';
-
-async function checkPassword(password: string, hashedPassword: string): Promise<boolean> { //pass check func
-    return await bcrypt.compare(password, hashedPassword);
-}
+import checkPassword  from '@/app/api/utils/checkPassword';
 
 export async function POST(request: NextRequest) {
-    const { username, password } = await request.json();
+    const {username, password} = await request.json();
 
-    let user = await getUser(undefined, username); // Check if email exists
+    let user = await getUser(undefined, username, undefined); // Check if email exists
 
     if (!user) {
         user = await getUser(undefined, undefined, username); // Check if username exists

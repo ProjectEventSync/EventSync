@@ -9,11 +9,11 @@ import jwt from 'jsonwebtoken';
 import {createUser} from "@/db/create/user";
 import {getUser} from "@/db/read/user";
 import {User} from "@/types";
+import hashPassword from "@/app/api/utils/hashPassword";
 
 export async function POST(request: NextRequest) {
     const {email, username, password} = await request.json();
 
-    console.log(email, username, password)
 
     const user = await getUser(undefined, email, undefined);
 
@@ -26,7 +26,9 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({"error": 'Username already exists'});
     }
 
-    const newUser = await createUser(User.fromJSON({email, username, password}));
+    let hashedPassword = await hashPassword(password);
+    console.log(hashedPassword);
+    const newUser = await createUser(User.fromJSON({email, username, hashedPassword}));
 
     // Ensure JWT_SECRET is defined
     if (!process.env.JWT_SECRET) {

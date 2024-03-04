@@ -17,7 +17,11 @@ async function getUser(userID?: string, email?: string, username?: string) {
 
   const users = await db.collection('users');
   const user = await users.findOne(filter);
-  return user as User;
+
+  if (!user) {
+      return null;
+  }
+  return User.fromJSON(user);
 }
 
 export { getUser };

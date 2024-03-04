@@ -8,7 +8,7 @@ export default function UserTooltip({ hideTooltip, user } : { hideTooltip: () =>
               <a href={'/users/'+user._id}><p className="mt-4 ml-4 dark:hover:text-neutral-400 dark:text-neutral-500">Profile</p></a>
               <XMarkIcon onClick={hideTooltip} className="mt-2 ml-2 mr-2 h-5 w-5 hover:text-neutral-300 text-neutral-400"/>
           </div>
-          <p className="ml-4 mb-4 hover:text-red-600 text-red-500">Sign out</p>
+          <a href="/signout"><p className="ml-4 mb-4 hover:text-red-600 text-red-500">Sign out</p></a>
       </div>
   )
 }
