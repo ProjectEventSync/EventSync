@@ -12,7 +12,7 @@ import {User} from "@/types";
 import hashPassword from "@/app/api/utils/hashPassword";
 
 export async function POST(request: NextRequest) {
-    const {email, username, password} = await request.json();
+    let {email, username, password} = await request.json();
 
 
     const user = await getUser(undefined, email, undefined);
@@ -26,9 +26,9 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({"error": 'Username already exists'});
     }
 
-    let hashedPassword = await hashPassword(password);
-    console.log(hashedPassword);
-    const newUser = await createUser(User.fromJSON({email, username, hashedPassword}));
+    password = await hashPassword(password);
+
+    const newUser = await createUser(User.fromJSON({email, username, password}));
 
     // Ensure JWT_SECRET is defined
     if (!process.env.JWT_SECRET) {
