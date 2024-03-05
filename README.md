@@ -1,2 +1,2 @@
 # EventSync Website
-hello your computer has virus
+hello your computer has vi
