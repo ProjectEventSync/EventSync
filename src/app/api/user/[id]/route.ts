@@ -26,23 +26,28 @@ export async function GET(request: NextRequest, { params } : {params: {id: strin
     return NextResponse.json(user.toJSON()); // Return user data as JSON
 }
 
-export async function PUT(request: NextRequest, { params } : {params: {user: string}}) {
+export async function PUT(request: NextRequest, { params } : {params: {id: string}}) {
     const updateData = await request.json(); // Get user data from request body
-    const user = await getUser(params.user); // Get user data by ID (user param is the user's ID)
+    const user = await getUser(params.id); // Get user data by ID (user param is the user's ID)
 
     if (!user) {
-        return new Error("User not found");
+        return NextResponse.json({error: 'User not found'});
     }
 
     await updateUser(user._id, updateData); // Update user in database
-    return NextResponse.json((await getUser(params.user)).toJSON()); // Return updated user data as JSON
+    const updatedUser = await getUser(params.id);
+
+    if (!updatedUser) {
+        return NextResponse.json({error: 'User not found'});
+    }
+    return NextResponse.json(updatedUser.toJSON()); // Return updated user data as JSON
 }
 
-export async function DELETE({ params } : {params: {user: string}}) {
-    const user = await getUser(params.user); // Get user data by ID (user param is the user's ID)
+export async function DELETE(request: NextRequest, { params } : {params: {id: string}}) {
+    const user = await getUser(params.id); // Get user data by ID (user param is the user's ID)
 
     if (!user) {
-        return new Error("User not found");
+        return NextResponse.json({error: 'User not found'});
     }
 
     await deleteUser(user._id); // Delete user from database
