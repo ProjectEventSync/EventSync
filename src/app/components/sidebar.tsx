@@ -7,7 +7,7 @@ import { User } from "@/types";
 import UserTooltip from "@/app/components/userTooltip";
 import {useState} from "react";
 
-export default function Sidebar({ active, user } : { active: string, user: User }) {
+export default function Sidebar({ active, user } : { active: string, user: User}) {
     let [tooltip, setTooltip] = useState(false);
 
     function showUserTooltip(){

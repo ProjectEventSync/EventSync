@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.1.1",
+    "@nextui-org/react": "^2.2.10",
     "@types/jsonwebtoken": "^9.0.6",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
+    "framer-motion": "^11.0.8",
     "heroicons": "^2.1.1",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
