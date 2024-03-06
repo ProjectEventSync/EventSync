@@ -7,12 +7,15 @@ import useTheme from "@/app/components/utils/theme/updateTheme";
 import {useEffect, useState} from "react";
 import Cookies from "js-cookie";
 import {useRouter} from "next/navigation";
+import {ScrollShadow} from "@nextui-org/react";
 
 
 
 export default function Dashboard() {
     let [theme, setTheme] = useTheme();
     let [user, setUser] = useState<User | null>(null);
+    let [meetups, setMeetups] = useState<(Meetup | null)[]>([null, null, null, null]);
+
     const router = useRouter();
     // Get TOKEN from cookie
 
@@ -39,6 +42,34 @@ export default function Dashboard() {
                         const user = res.json();
                         user.then((data) => {
                             setUser(data);
+
+                            if (data.meetups.length == 0) {
+                                setMeetups([]);
+                                return;
+                            }
+
+                            data.meetups.map((meetup: string) => {
+                                fetch(`/api/meetup/${meetup}`, {
+                                    method: 'GET',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Authorization': `Bearer ${token}`
+                                    }
+                                }).then((res) => {
+                                    const meetup = res.json();
+                                    meetup.then((data) => {
+                                        setMeetups((meetups) => {
+                                            if (!meetups[0]){
+                                                return [data];
+                                            }
+                                            const newMeetups = meetups;
+                                            newMeetups.push(data);
+                                            return newMeetups;
+                                        });
+                                    });
+                                });
+                            }
+                            );
                         });
                     });
                 } else {
@@ -54,10 +85,13 @@ export default function Dashboard() {
             <div className="flex flex-col h-full w-full p-4">
                 <h1 className="text-2xl mb-4 dark:text-white text-black font-bold">Dashboard</h1>
                 <div className="flex flex-col xl:flex-row w-full h-full">
-                    <div className="flex flex-col p-4 bg-neutral-100 rounded-md dark:bg-neutral-950 border dark:border-neutral-900 w-full xl:w-1/2 h-full">
-                        <p className="uppercase dark:text-neutral-500 mb-4">Meetups</p>
-                        <MeetupCard meetup={defaultMeetup} creator={user}/>
-                    </div>
+                    <div className="flex flex-col overflow-scroll p-4 bg-neutral-100 rounded-md dark:bg-neutral-950 border dark:border-neutral-900 w-full xl:w-1/2 h-full">
+                    <p className="uppercase dark:text-neutral-500 mb-4">Meetups</p>
+                    <ScrollShadow className="flex flex-col overflow-scroll">
+                        {meetups.map((meetup, index) => {
+                            return <MeetupCard key={index} creator={user} meetup={meetup}/>
+                        })}
+                    </ScrollShadow></div>
                     <div className="flex flex-col w-full xl:mt-0 mt-4 xl:w-1/2 h-full xl:ml-4">
                         <div className="flex flex-col p-4 rounded-md dark:bg-neutral-950 border bg-neutral-100 dark:border-neutral-900 h-1/2">
                             <p className="uppercase dark:text-neutral-500 mb-4">Friends</p>

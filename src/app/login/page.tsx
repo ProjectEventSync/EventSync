@@ -4,6 +4,7 @@ import { UserCircleIcon, EyeIcon, EyeSlashIcon, LockClosedIcon, ArrowLongRightIc
 import useTheme from "@/app/components/utils/theme/updateTheme";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import {Button} from "@nextui-org/react";
 
 
 
@@ -13,12 +14,13 @@ export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
     const [theme, setTheme] = useTheme();
     const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
 
     const handleSubmit = (e: { preventDefault: () => void; }) => {
         // POST request to /api/auth/signup
         e.preventDefault();
-
+        setIsLoading(true);
         fetch('/api/auth/login', {
             method: 'POST',
             headers: {
@@ -28,6 +30,7 @@ export default function Login() {
         })
             .then((res)=> {
                 res.json().then((data) => {
+                    setIsLoading(false);
                     if (data.error) {
                         setError(data.error);
                     } else {
@@ -57,7 +60,7 @@ export default function Login() {
                             onChange={(e) => setUsername(e.target.value)}
                             required
                             autoComplete="email"
-                            className="w-full px-6 py-[14px] pl-12 rounded-lg filter drop-shadow-md text-black text-sm"
+                            className="w-full px-6 py-[14px] pl-12 rounded-lg filter drop-shadow-md dark:text-white text-black text-sm"
                         />
                         <UserCircleIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" />
                     </div>
@@ -69,7 +72,7 @@ export default function Login() {
                             onChange={(e) => setPassword(e.target.value)}
                             required
                             autoComplete="current-password"
-                            className="w-full px-6 py-[14px] pl-12 pr-12 rounded-lg filter drop-shadow-md text-black text-sm"
+                            className="w-full px-6 py-[14px] pl-12 pr-12 rounded-lg filter drop-shadow-md dark:text-white text-black text-sm"
                         />
                         <LockClosedIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" />
                         <div className="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer" onClick={() => setShowPassword(!showPassword)}>
@@ -78,9 +81,10 @@ export default function Login() {
                     </div>
                     <p className="text-red-500 text-sm mb-4">{error}</p>
                     <p className="text-blue-500  mb-2 text-sm">Forgot Password?</p>
-                    <button type="submit" className="w-full flex items-center justify-center bg-blue-500 filter drop-shadow-md text-white px-4 py-3 rounded-lg cursor-pointer text-base">
+
+                    <Button type="submit"  className="w-full bg-blue-500 flex items-center justify-center filter drop-shadow-md text-white px-4 py-3 rounded-lg cursor-pointer text-base" isLoading={isLoading}>
                         Log In <ArrowLongRightIcon className="ml-4 w-6 h-6" />
-                    </button>
+                    </Button>
                 </form>
             </div>
         </div>

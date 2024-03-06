@@ -64,7 +64,7 @@ export default function Signup() {
                             onChange={(e) => setEmail(e.target.value)}
                             required
                             autoComplete="email"
-                            className="w-full px-6 py-[14px] pl-12 rounded-lg filter drop-shadow-md text-black text-sm"
+                            className="w-full px-6 py-[14px] pl-12 rounded-lg filter drop-shadow-md text-black dark:text-white text-sm"
                         />
                         <AtSymbolIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" />
                     </div>
@@ -76,7 +76,7 @@ export default function Signup() {
                             onChange={(e) => setUsername(e.target.value)}
                             required
                             autoComplete="off"
-                            className="w-full px-6 py-[14px] pl-12 rounded-lg filter drop-shadow-md text-black text-sm"
+                            className="w-full px-6 py-[14px] pl-12 rounded-lg filter drop-shadow-md text-black dark:text-white text-sm"
                         />
                         <UserCircleIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" />
                     </div>
@@ -88,7 +88,7 @@ export default function Signup() {
                             onChange={(e) => setPassword(e.target.value)}
                             required
                             autoComplete="new-password"
-                            className="w-full px-6 py-[14px] pl-12 rounded-lg filter drop-shadow-md text-black text-sm"
+                            className="w-full px-6 py-[14px] pl-12 rounded-lg filter drop-shadow-md dark:text-white text-black text-sm"
                         />
                         <LockClosedIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" />
                     </div>
@@ -100,7 +100,7 @@ export default function Signup() {
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             required
                             autoComplete="new-password"
-                            className="w-full px-6 py-[14px] pl-12 rounded-lg filter drop-shadow-md text-black text-sm"
+                            className="w-full px-6 py-[14px] pl-12 rounded-lg filter drop-shadow-md dark:text-white text-black text-sm"
                         />
                         <LockClosedIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" />
                     </div>
