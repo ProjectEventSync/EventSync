@@ -12,7 +12,7 @@ import {useRouter} from "next/navigation";
 
 export default function Dashboard() {
     let [theme, setTheme] = useTheme();
-    let [user, setUser] = useState<User>(defaultUser);
+    let [user, setUser] = useState<User | null>(null);
     const router = useRouter();
     // Get TOKEN from cookie
 

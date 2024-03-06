@@ -1,7 +1,8 @@
 import { UserGroupIcon, ClockIcon, CalendarIcon } from "@heroicons/react/20/solid";
 import { Meetup, User } from "@/types";
+import { Skeleton } from "@nextui-org/react";
 
-export default function MeetupCard({ meetup, creator }: { meetup: Meetup, creator: User }){
+export default function MeetupCard({ meetup, creator }: { meetup: Meetup, creator: User | null }){
     const startTime = meetup.date.toLocaleTimeString();
     const startDate = meetup.date.toLocaleDateString();
 
@@ -12,7 +13,9 @@ export default function MeetupCard({ meetup, creator }: { meetup: Meetup, creato
                 <div className="ml-4 flex flex-grow flex-col justify-between">
                     <div className="flex flex-row justify-between">
                         <h1 className="text-lg font-bold text-black dark:text-white">{ meetup.title }</h1>
-                        <img className="hover:opacity-90 aspect-square w-7 rounded-full" src={ creator.avatar }/>
+                        { creator? <img className="hover:opacity-90 aspect-square w-7 rounded-full" src={ creator.avatar }/>
+                            : <Skeleton className="aspect-square w-7 rounded-full" />
+                        }
                     </div>
                     <p className="text-base text-neutral-500 dark:text-neutral-400 dark:group-hover:text-neutral-300">{ meetup.description }</p>
 
