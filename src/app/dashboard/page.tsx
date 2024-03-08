@@ -83,7 +83,7 @@ export default function Dashboard() {
 
 
     return (
-        <div className="flex flex-row bg-neutral-100 dark:bg-black h-screen w-screen">
+        <div className="flex flex-row bg-stone-100 dark:bg-slate-950 h-screen w-screen">
             <Sidebar user={user} active="dashboard"/>
             <div className="flex flex-row h-full w-full p-4">
                 <div className="w-1/2 lg:h-full flex flex-col p-4">

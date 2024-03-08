@@ -22,13 +22,13 @@ export default function Sidebar({ active, user } : { active: string, user: User 
     }
 
     return (
-        <aside className=" relative justify-between lg:justify-normal h-screen w-24 flex-shrink-0 flex flex-col lg:w-64 border-r border:neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950">
+        <aside className=" relative justify-between lg:justify-normal h-screen w-24 flex-shrink-0 flex flex-col lg:w-64 border-r border:neutral-200 dark:border-neutral-800 bg-stone-50 dark:bg-slate-900">
            <div className="p-2">
                <div className="block lg:hidden dark:hidden">
                    <img src="/sm-logo.png" className="w-20 h-20"/>
                </div>
                <div className="hidden lg:block dark:hidden">
-                    <img src="/lg-logo.png" className="w-56 h-56"/>
+                    <img src="/lg-logo.png" className=""/>
                </div>
                <div className="hidden dark:lg:block">
                      <img src="/lg-dark-logo.png" className="w-56 h-56"/>
