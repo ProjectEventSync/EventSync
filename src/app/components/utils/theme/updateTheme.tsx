@@ -1,39 +1,20 @@
 "use client";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
 import detectTheme from "@/app/components/utils/theme/detectTheme";
 
-export default function useTheme(){
-    // TODO: Use DB instead of local storage to store theme
-    // Get the current theme from local storage or default to system
-    let [theme, setTheme] = useState("system");
-    let [systemTheme, setSystemTheme] = useState("");
-
-    // Update the theme in the DOM
-    useEffect(() => {
-        setTheme(localStorage.getItem("theme") || "system");
-    }, []);
+export default function useUserTheme() : [string, React.Dispatch<React.SetStateAction<string>>] {
+    const { theme, setTheme } = useTheme();
+    const [userTheme, setUserTheme] = useState<string>("");
 
     useEffect(() => {
-        const root = window.document.documentElement;
-
-        root.classList.remove("dark");
-        root.classList.remove("light");
-
-        if (theme == "system") {
-            if (systemTheme == "") {
-                const curSystemTheme = detectTheme(setSystemTheme);
-                root.classList.add(curSystemTheme);
-                setSystemTheme(curSystemTheme);
-            } else {
-                root.classList.add(systemTheme);
+        if (userTheme) {
+            if (userTheme === "system") {
+                detectTheme(setTheme);
             }
-        } else {
-            root.classList.add(theme);
+            setTheme(userTheme);
         }
+    }, [userTheme]);
 
-        localStorage.setItem("theme", theme);
-
-    }, [theme, systemTheme]); // Only run when the theme changes
-
-    return [ theme, setTheme ];
+    return [userTheme, setUserTheme];
 }

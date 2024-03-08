@@ -20,7 +20,7 @@ const config: Config = {
   },
   plugins: [nextui(
       {
-        addCommonColors: true,
+
       }
   )],
 };

@@ -53,8 +53,8 @@ class Meetup {
 }
 
 const defaultMeetup = new Meetup(
-    "Meetup Title",
-    "Meetup Description",
+    "Excursion in the Alps",
+    "We will be hiking in the Alps. Bring your hiking boots and a packed lunch.",
     new Date("2022-12-12T12:00:00Z"),
     "none",
     defaultUser._id,

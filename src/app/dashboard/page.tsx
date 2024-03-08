@@ -3,19 +3,21 @@
 import Sidebar from "../components/sidebar";
 import MeetupCard from "@/app/components/meetupCard";
 import {Meetup, defaultMeetup, User, defaultUser} from "@/types";
-import useTheme from "@/app/components/utils/theme/updateTheme";
 import {useEffect, useState} from "react";
 import Cookies from "js-cookie";
 import {useRouter} from "next/navigation";
-import {ScrollShadow} from "@nextui-org/react";
+import {ScrollShadow, Input} from "@nextui-org/react";
+import {MagnifyingGlassIcon, PlusIcon} from "@heroicons/react/24/solid";
+import useUserTheme from "@/app/components/utils/theme/updateTheme";
+import {Button} from "@nextui-org/react";
 
 
 
 export default function Dashboard() {
-    let [theme, setTheme] = useTheme();
+    let [userTheme, setUserTheme] = useUserTheme();
     let [user, setUser] = useState<User | null>(null);
     let [meetups, setMeetups] = useState<(Meetup | null)[]>([null, null, null, null]);
-
+    let [search, setSearch] = useState('');
     const router = useRouter();
     // Get TOKEN from cookie
 
@@ -42,7 +44,7 @@ export default function Dashboard() {
                         const user = res.json();
                         user.then((data) => {
                             setUser(data);
-
+                            setUserTheme(data.theme);
                             if (data.meetups.length == 0) {
                                 setMeetups([]);
                                 return;
@@ -79,33 +81,20 @@ export default function Dashboard() {
         });
     }, []);
 
+
     return (
         <div className="flex flex-row bg-neutral-100 dark:bg-black h-screen w-screen">
             <Sidebar user={user} active="dashboard"/>
-            <div className="flex flex-col h-full w-full p-4">
-                <h1 className="text-2xl mb-4 dark:text-white text-black font-bold">Dashboard</h1>
-                <div className="flex flex-col xl:flex-row w-full h-full">
-                    <div className="flex flex-col overflow-scroll p-4 bg-neutral-100 rounded-md dark:bg-neutral-950 border dark:border-neutral-900 w-full xl:w-1/2 h-full">
-                    <p className="uppercase dark:text-neutral-500 mb-4">Meetups</p>
-                    <ScrollShadow className="flex flex-col overflow-scroll">
-                        {meetups.map((meetup, index) => {
-                            return <MeetupCard key={index} creator={user} meetup={meetup}/>
-                        })}
-                    </ScrollShadow></div>
-                    <div className="flex flex-col w-full xl:mt-0 mt-4 xl:w-1/2 h-full xl:ml-4">
-                        <div className="flex flex-col p-4 rounded-md dark:bg-neutral-950 border bg-neutral-100 dark:border-neutral-900 h-1/2">
-                            <p className="uppercase dark:text-neutral-500 mb-4">Friends</p>
+            <div className="flex flex-row h-full w-full p-4">
+                <div className="w-1/2 lg:h-full flex flex-col p-4">
+                    <p className="dark:text-white0 text-lg font-bold mb-4">Meetups</p>
+                    <div className="flex flex-row w-full justify-between">
+                        { meetups.map((meetup, index) => (
+                            <MeetupCard meetup={meetup} creator={user} small={true} key={index}/>
+                        ))}
                         </div>
-                        <div className="flex flex-col p-4 rounded-md dark:bg-neutral-950 border bg-neutral-100 dark:border-neutral-900 h-1/2 mt-4">
-                            <p className="uppercase dark:text-neutral-500 mb-4">Notifications</p>
-                        </div>
-                    </div>
-
                 </div>
-
             </div>
-
-
         </div>
     );
 }
