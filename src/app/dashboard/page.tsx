@@ -3,13 +3,14 @@
 import Sidebar from "../components/sidebar";
 import MeetupCard from "@/app/components/meetupCard";
 import {Meetup, defaultMeetup, User, defaultUser} from "@/types";
-import {useEffect, useState} from "react";
+import {useEffect, useState} from "react";1
 import Cookies from "js-cookie";
 import {useRouter} from "next/navigation";
 import {ScrollShadow, Input} from "@nextui-org/react";
 import {MagnifyingGlassIcon, PlusIcon} from "@heroicons/react/24/solid";
 import useUserTheme from "@/app/components/utils/theme/updateTheme";
 import {Button} from "@nextui-org/react";
+import useSession from "@/app/components/utils/sessionProvider";
 
 
 
@@ -18,68 +19,55 @@ export default function Dashboard() {
     let [user, setUser] = useState<User | null>(null);
     let [meetups, setMeetups] = useState<(Meetup | null)[]>([null, null, null, null]);
     let [search, setSearch] = useState('');
+    let [loadingUser, setLoadingUser] = useState(true);
+    let [loadingMeetups, setLoadingMeetups] = useState(true);
     const router = useRouter();
+
     // Get TOKEN from cookie
+    const { session, status } = useSession();
 
-    useEffect(() => {
-        const token = Cookies.get('token');
-
-        fetch('/api/auth/verify', {
+    if (status == "done" && loadingUser) {
+        setLoadingUser(false);
+        fetch(`/api/user/${session.userID}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${session.token}`
             }
-        }).then((res) => {
-            const data = res.json() as Promise<{ data: {userID: string, type: string} } | { error: string }>;
-            data.then((userData) => {
-                if ('data' in userData) {
-                    fetch(`/api/user/${userData.data.userID}`, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${token}`
-                        }
-                    }).then((res) => {
-                        const user = res.json();
-                        user.then((data) => {
-                            setUser(data);
-                            setUserTheme(data.theme);
-                            if (data.meetups.length == 0) {
-                                setMeetups([]);
-                                return;
-                            }
-
-                            data.meetups.map((meetup: string) => {
-                                fetch(`/api/meetup/${meetup}`, {
-                                    method: 'GET',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                        'Authorization': `Bearer ${token}`
-                                    }
-                                }).then((res) => {
-                                    const meetup = res.json();
-                                    meetup.then((data) => {
-                                        setMeetups((meetups) => {
-                                            if (!meetups[0]){
-                                                return [data];
-                                            }
-                                            const newMeetups = meetups;
-                                            newMeetups.push(data);
-                                            return newMeetups;
-                                        });
-                                    });
-                                });
-                            }
-                            );
-                        });
-                    });
-                } else {
-                    router.push('/login');
-                }
+        }).then((data) => {
+            data.json().then((user) => {
+                setUser(user);
+                setUserTheme(user.theme);
             });
         });
-    }, []);
+    } else if (status == "error") {
+        router.push('/login');
+    }
+
+    if (user && loadingMeetups) {
+        setLoadingMeetups(false);
+        const newMeetups: Meetup[] = [];
+
+        if (!user.meetups) {
+            setMeetups([]);
+            return;
+        }
+
+        user.meetups.forEach((meetupID) => {
+            fetch(`/api/meetups/${meetupID}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authoirzation': `Bearer ${session.token}`
+                }
+            }).then((res) => {
+                res.json().then((meetup) => {
+                    newMeetups.push(meetup);
+                });
+            });
+        });
+        setMeetups(newMeetups);
+    }
 
 
     return (

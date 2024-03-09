@@ -2,3 +2,4 @@
 
 export * from './User';
 export * from './Meetup';
+export * from './Session';
