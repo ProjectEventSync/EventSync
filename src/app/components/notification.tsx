@@ -16,7 +16,7 @@ export default function NotificationCard({notification, initiator, meetup} : {no
 
     return (
         <Card className="mb-4 min-w-52">
-            <CardHeader className="flex flex-row ">
+            <CardHeader className="flex flex-row w-full">
                     {notification ?
                         ([1, 2, 3, 11].includes(notification.type) ?
                             (initiator && meetup ?
@@ -25,8 +25,8 @@ export default function NotificationCard({notification, initiator, meetup} : {no
                             )
                             : ([4, 5, 6, 7].includes(notification.type) ?
                                 (initiator ?
-                                    <Avatar  isBordered src={initiator.avatar} radius="full" size="sm"/>
-                                    : <Skeleton className="w-20 h-20 aspect-square rounded-full"/>
+                                    <Avatar  isBordered src={initiator.avatar} radius="full" size="sm" className="flex-shrink-0"/>
+                                    : <Skeleton className="w-8 flex-shrink-0 h-8 aspect-square rounded-full"/>
                                 )
                                 : ([7, 8, 9, 10, 12, 13].includes(notification.type) ?
                                     (meetup ?
@@ -37,32 +37,32 @@ export default function NotificationCard({notification, initiator, meetup} : {no
                                 )
                             )
                         )
-                    : <Skeleton className="w-8 h-8 rounded-full"/>
+                    : <Skeleton className="w-8 h-8 flex-shrink-0 rounded-full"/>
                     }
-                    <div className="flex flex-col ml-4 ">
+                    <div className="flex flex-col w-full ml-4">
                         {data? <p className="text-sm font-semibold">{data.title}</p>
-                            : <Skeleton className="w-full h-3 mb-1 rounded-md"/>
+                            : <Skeleton className="w-3/5 h-3 mb-1 rounded-md"/>
                         }
                         {data ? <p className="text-xs dark:text-gray-400">{data.message}</p>
-                            : <Skeleton className="w-full h-3 rounded-md"/>
+                            : <Skeleton className="w-4/5 h-3 rounded-md"/>
                         }
                     </div>
                 </CardHeader>
-                    <CardBody className="pb-1 pt-0 flex flex-row justify-between">
+                    <CardBody className="pb-1 pt-0 flex w-full flex-row justify-between">
                         {notification?
                             <Chip
                                 startContent={<CalendarIcon width={16} height={16}/>}
                                 variant="faded"
                                 color="success"
                             >{new Date(notification.date).toLocaleDateString()}</Chip>
-                            : <Skeleton className="w-20 h-4 rounded-md mb-1.5"/>
+                            : <Skeleton className="w-3/5 h-4 rounded-md mb-1.5"/>
                         }
 
                         {notification?
                         <Button className="mb-1" variant="light" color="primary" size="sm">
                             <p>View</p>
                         </Button> :
-                        <Skeleton className="w-20 rounded-md h-4 mb-1.5"/>}
+                        <Skeleton className="w-1/5 rounded-md h-4 mb-1.5"/>}
 
                     </CardBody>
         </Card>
