@@ -11,13 +11,14 @@ export async function GET(request: NextRequest, { params } : {params: {id: strin
     const headersInstance = headers()
     const authorization = headersInstance.get('authorization');
     const data = verifyJWT(authorization);
+
     if ("error" in data) {
         return NextResponse.json({error: data.error})
     }
     if (data.type == "api"){
         // Do additional checks for scopes
     }
-    const user = await getUser(params.id, undefined, undefined); // Get user data by ID (user param is the user's ID)
+    const user = await getUser({userID: params.id}); // Get user data by ID (user param is the user's ID)
 
     if (!user) {
         return NextResponse.json({error: 'User not found'});
@@ -27,15 +28,27 @@ export async function GET(request: NextRequest, { params } : {params: {id: strin
 }
 
 export async function PUT(request: NextRequest, { params } : {params: {id: string}}) {
+ // Get user data by ID (user param is the user's ID)
+    const headersInstance = headers();
+    const authorization = headersInstance.get('authorization');
+    const data = verifyJWT(authorization);
+
+    if ("error" in data) {
+        return NextResponse.json({error: data.error})
+    }
+    if (data.type == "api"){
+        // Do additional checks for scopes
+    }
+
     const updateData = await request.json(); // Get user data from request body
-    const user = await getUser(params.id); // Get user data by ID (user param is the user's ID)
+    const user = await getUser({userID: params.id});
 
     if (!user) {
         return NextResponse.json({error: 'User not found'});
     }
 
     await updateUser(user._id, updateData); // Update user in database
-    const updatedUser = await getUser(params.id);
+    const updatedUser = await getUser({userID: params.id});
 
     if (!updatedUser) {
         return NextResponse.json({error: 'User not found'});
@@ -44,7 +57,18 @@ export async function PUT(request: NextRequest, { params } : {params: {id: strin
 }
 
 export async function DELETE(request: NextRequest, { params } : {params: {id: string}}) {
-    const user = await getUser(params.id); // Get user data by ID (user param is the user's ID)
+    const headersInstance = headers();
+    const authorization = headersInstance.get('authorization');
+    const data = verifyJWT(authorization);
+
+    if ("error" in data) {
+        return NextResponse.json({error: data.error})
+    }
+    if (data.type == "api"){
+        // Do additional checks for scopes
+    }
+
+    const user = await getUser({userID: params.id}); // Get user data by ID (user param is the user's ID)
 
     if (!user) {
         return NextResponse.json({error: 'User not found'});

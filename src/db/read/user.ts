@@ -2,7 +2,12 @@ import { db } from '../connect';
 import { User } from '../../types';
 
 // Returns a user from the database
-async function getUser(userID?: string, email?: string, username?: string) {
+interface GetUserParams {
+    userID?: string;
+    email?: string;
+    username?: string;
+}
+async function getUser({userID, email, username}: GetUserParams) {
   let filter: any = {};
 
   if (!userID && !email && !username) {
@@ -21,7 +26,7 @@ async function getUser(userID?: string, email?: string, username?: string) {
   if (!user) {
       return null;
   }
-  return User.fromJSON(user);
+  return new User(user);
 }
 
 export { getUser };

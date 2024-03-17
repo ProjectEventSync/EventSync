@@ -5,13 +5,13 @@ import { Meetup } from '../../types';
 
 async function getMeetup(meetupID: string) {
   const meetups = await db.collection('meetups');
-  const meetup = await meetups.findOne({ id: meetupID });
+  const meetup = await meetups.findOne({ _id: meetupID });
 
-    if (!meetup) {
-        return null;
-    }
+  if (!meetup) {
+      return null;
+  }
 
-  return Meetup.fromJSON(meetup);
+  return new Meetup(meetup);
 }
 
 export { getMeetup };

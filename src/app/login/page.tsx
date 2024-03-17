@@ -17,7 +17,7 @@ export default function Login() {
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
 
-    const handleSubmit = (e: { preventDefault: () => void; }) => {
+    const handleSubmit = (e: { preventDefault: () => void; })  => {
         // POST request to /api/auth/signup
         e.preventDefault();
         setIsLoading(true);
@@ -41,7 +41,6 @@ export default function Login() {
                 });
             });
     };
-
 
     return (
         <div className="flex justify-center items-center h-screen font-inter">

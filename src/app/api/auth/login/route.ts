@@ -9,10 +9,10 @@ import checkPassword  from '@/app/api/utils/checkPassword';
 export async function POST(request: NextRequest) {
     const {username, password} = await request.json();
 
-    let user = await getUser(undefined, username, undefined); // Check if email exists
+    let user = await getUser({email: username}); // Check if email exists
 
     if (!user) {
-        user = await getUser(undefined, undefined, username); // Check if username exists
+        user = await getUser({username}); // Check if username exists
 
         if (!user) {
             return NextResponse.json({ "error": "User not found" }); // If neither email nor username exists, return error

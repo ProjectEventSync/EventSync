@@ -2,7 +2,7 @@
 
 import Sidebar from "../components/sidebar";
 import MeetupCard from "@/app/components/meetupCard";
-import {Meetup, defaultMeetup, User, defaultUser} from "@/types";
+import {Meetup, defaultMeetup, User, defaultUser, AppNotification} from "@/types";
 import {useEffect, useState} from "react";1
 import Cookies from "js-cookie";
 import {useRouter} from "next/navigation";
@@ -11,6 +11,7 @@ import {MagnifyingGlassIcon, PlusIcon} from "@heroicons/react/24/solid";
 import useUserTheme from "@/app/components/utils/theme/updateTheme";
 import {Button} from "@nextui-org/react";
 import useSession from "@/app/components/utils/sessionProvider";
+import NotificationCard from "@/app/components/notification";
 
 
 
@@ -21,12 +22,17 @@ export default function Dashboard() {
     let [search, setSearch] = useState('');
     let [loadingUser, setLoadingUser] = useState(true);
     let [loadingMeetups, setLoadingMeetups] = useState(true);
+    let [loadingNotifications, setLoadingNotifications] = useState(true);
+    let [knownUsers, setKnownUsers] = useState<User[]>([]); // Cache for user information (notifications, meetup card, etc.)
+    let [notifications, setNotifications] = useState<(AppNotification | null)[]>([null, null, null, null]);
+
     const router = useRouter();
 
     // Get TOKEN from cookie
     const { session, status } = useSession();
 
     if (status == "done" && loadingUser) {
+
         setLoadingUser(false);
         fetch(`/api/user/${session.userID}`, {
             method: 'GET',
@@ -37,6 +43,7 @@ export default function Dashboard() {
         }).then((data) => {
             data.json().then((user) => {
                 setUser(user);
+                setKnownUsers((prev) => [...prev, user]);
                 setUserTheme(user.theme);
             });
         });
@@ -44,43 +51,107 @@ export default function Dashboard() {
         router.push('/login');
     }
 
-    if (user && loadingMeetups) {
-        setLoadingMeetups(false);
-        const newMeetups: Meetup[] = [];
+    if (user && loadingNotifications) {
 
-        if (!user.meetups) {
-            setMeetups([]);
+        setLoadingNotifications(false);
+        setNotifications([]);
+
+
+
+        if (!user.notifications) {
             return;
         }
-
-        user.meetups.forEach((meetupID) => {
-            fetch(`/api/meetups/${meetupID}`, {
+        user.notifications.forEach((notificationID) => {
+            fetch(`/api/notification/${notificationID}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authoirzation': `Bearer ${session.token}`
+                    'Authorization': `Bearer ${session.token}`
                 }
             }).then((res) => {
-                res.json().then((meetup) => {
-                    newMeetups.push(meetup);
+                res.json().then((notification) => {
+                    setNotifications((prev) => [...prev, notification]);
+                    if (notification.initiator) {
+                        if (knownUsers.find((user) => user._id == notification.initiator)) {
+                            return;
+                        }
+                        fetch(`/api/user/${notification.initiator}`, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${session.token}`
+                            }
+                        }).then((res) => {
+                            res.json().then((initiator) => {
+                                setKnownUsers((prev) => [...prev, initiator]);
+                            });
+                        });
+                    }
+
                 });
             });
         });
-        setMeetups(newMeetups);
+    }
+
+    if (user && loadingMeetups) {
+        setLoadingMeetups(false);
+        setMeetups([]);
+
+        if (!user.meetups) {
+            return;
+        }
+        user.meetups.forEach((meetupID) => {
+            fetch(`/api/meetup/${meetupID}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${session.token}`
+                }
+            }).then((res) => {
+                res.json().then((meetup) => {
+
+                    setMeetups((prev) => [...prev, meetup]);
+                    if (knownUsers.find((user) => user._id == meetup.creator)) {
+                        return;
+                    }
+                    fetch(`/api/user/${meetup.creator}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${session.token}`
+                        }
+                    }).then((res) => {
+                        res.json().then((creator) => {
+                            setKnownUsers((prev) => [...prev, creator]);
+                        });
+                    });
+                });
+            });
+        });
+
+
     }
 
 
     return (
-        <div className="flex flex-row bg-stone-100 dark:bg-slate-950 h-screen w-screen">
+        <div className="flex flex-row bg-stone-100 dark:bg-black h-screen w-screen">
             <Sidebar user={user} active="dashboard"/>
             <div className="flex flex-row h-full w-full p-4">
                 <div className="w-1/2 lg:h-full flex flex-col p-4">
-                    <p className="dark:text-white0 text-lg font-bold mb-4">Meetups</p>
-                    <div className="flex flex-row w-full justify-between">
+                    <p className="dark:text-white text-lg font-bold mb-4">Meetups</p>
+                    <div className="flex flex-col w-full">
                         { meetups.map((meetup, index) => (
                             <MeetupCard meetup={meetup} creator={user} small={true} key={index}/>
                         ))}
                         </div>
+                </div>
+                <div className="w-1/2 lg:h-full flex flex-col p-4">
+                    <p className="dark:text-white text-lg font-bold mb-4">Notifications</p>
+                    <div className="flex flex-col w-full">
+                        { notifications.map((notification, index) => (
+                            <NotificationCard notification={notification} meetup={notification?.meetup? meetups.find((meetup) => meetup?._id == notification.meetup) || null : null} initiator={notification?.initiator ? knownUsers.find((user) => user._id == notification.initiator) || null : null} key={index}/>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

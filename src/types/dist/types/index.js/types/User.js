@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.defaultUser = exports.User = void 0;
 var snowflake_1 = require("../db/utils/snowflake");
-// TODO: Decide on the fields for a User
 var User = /** @class */ (function () {
-    function User(username, email, password, meetups, _id, avatar, theme) {
+    function User(_a) {
+        var username = _a.username, email = _a.email, password = _a.password, meetups = _a.meetups, _id = _a._id, avatar = _a.avatar, theme = _a.theme;
         this.meetups = []; // Array of meetup ids
         this.theme = "system"; // User's preferred theme
         this._id = _id ? _id : (0, snowflake_1.generateSnowflake)();
@@ -15,10 +15,6 @@ var User = /** @class */ (function () {
         this.avatar = avatar ? avatar : "https://www.gravatar.com/avatar/";
         this.theme = theme ? theme : "system";
     }
-    // Converts a JSON object to a User instance
-    User.fromJSON = function (json) {
-        return new User(json.username, json.email, json.password, json.meetups, json._id, json.avatar, json.theme);
-    };
     // Converts a User instance to a JSON object
     User.prototype.toJSON = function () {
         return {
@@ -34,5 +30,9 @@ var User = /** @class */ (function () {
     return User;
 }());
 exports.User = User;
-var defaultUser = new User("John Doe", "johndoe@eventsync.app", "password");
+var defaultUser = new User({
+    username: "John Doe",
+    email: "johndoe@eventsync.app",
+    password: "password",
+});
 exports.defaultUser = defaultUser;

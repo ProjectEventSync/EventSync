@@ -8,6 +8,12 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "browser": {
+    "fs": false,
+    "child_process": false,
+    "path": false,
+    "os": false
+  },
   "dependencies": {
     "@heroicons/react": "^2.1.1",
     "@nextui-org/react": "^2.2.10",

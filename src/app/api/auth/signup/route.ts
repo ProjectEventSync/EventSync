@@ -15,12 +15,12 @@ export async function POST(request: NextRequest) {
     let {email, username, password} = await request.json();
 
 
-    const user = await getUser(undefined, email, undefined);
+    const user = await getUser({email});
 
     if (user) {
         return NextResponse.json({"error": 'Email already exists'});
     }
-    const user2 = await getUser(undefined, undefined, username);
+    const user2 = await getUser({username});
 
     if (user2) {
         return NextResponse.json({"error": 'Username already exists'});
@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
 
     password = await hashPassword(password);
 
-    const newUser = await createUser(User.fromJSON({email, username, password}));
+    const newUser = await createUser(new User({email, username, password}));
 
     // Ensure JWT_SECRET is defined
     if (!process.env.JWT_SECRET) {
