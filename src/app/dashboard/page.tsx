@@ -138,7 +138,20 @@ export default function Dashboard() {
             <Sidebar user={user} active="dashboard"/>
             <div className="flex flex-row h-full w-full">
                 <div className="w-2/3 lg:h-full flex flex-col">
-                    <p className="dark:text-white text-lg border-b dark:border-stone-800 font-bold dark:bg-stone-950 p-4">Meetups</p>
+                    <div className="flex flex-row items-center justify-between p-4 border-b dark:border-stone-800 dark:bg-stone-950">
+                        <p className="dark:text-white text-2xl font-bold">Meetups</p>
+                        <div className="flex flex-row space-x-4">
+                            <Input
+                                placeholder="Search"
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                                startContent={<MagnifyingGlassIcon width={20} height={20}/>}
+                            />
+                            <Button color="primary" variant="flat" isIconOnly onClick={() => router.push('/meetups/create')}>
+                                <PlusIcon width={20} height={20}/>
+                            </Button>
+                        </div>
+                    </div>
                     <div className="flex flex-col w-full p-4">
                         { meetups.map((meetup, index) => (
                             <MeetupCard meetup={meetup} creator={user} small={true} key={index}/>
