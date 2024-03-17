@@ -136,18 +136,18 @@ export default function Dashboard() {
     return (
         <div className="flex flex-row bg-stone-100 dark:bg-black h-screen w-screen">
             <Sidebar user={user} active="dashboard"/>
-            <div className="flex flex-row h-full w-full p-4">
-                <div className="w-1/2 lg:h-full flex flex-col p-4">
-                    <p className="dark:text-white text-lg font-bold mb-4">Meetups</p>
-                    <div className="flex flex-col w-full">
+            <div className="flex flex-row h-full w-full">
+                <div className="w-2/3 lg:h-full flex flex-col">
+                    <p className="dark:text-white text-lg border-b dark:border-stone-800 font-bold dark:bg-stone-950 p-4">Meetups</p>
+                    <div className="flex flex-col w-full p-4">
                         { meetups.map((meetup, index) => (
                             <MeetupCard meetup={meetup} creator={user} small={true} key={index}/>
                         ))}
                         </div>
                 </div>
-                <div className="w-1/2 lg:h-full flex flex-col p-4">
-                    <p className="dark:text-white text-lg font-bold mb-4">Notifications</p>
-                    <div className="flex flex-col w-full">
+                <div className="w-1/3 lg:h-full border-l dark:border-stone-800 dark:bg-stone-950 flex flex-col">
+                    <p className="dark:text-white text-lg font-bold border-b dark:border-stone-800 p-4">Notifications</p>
+                    <div className="flex flex-col w-full p-4">
                         { notifications.map((notification, index) => (
                             <NotificationCard notification={notification} meetup={notification?.meetup? meetups.find((meetup) => meetup?._id == notification.meetup) || null : null} initiator={notification?.initiator ? knownUsers.find((user) => user._id == notification.initiator) || null : null} key={index}/>
                         ))}

@@ -19,22 +19,24 @@ export default function MeetupCard({ meetup, creator, small }: { meetup: Meetup 
                         <Skeleton className="rounded-lg h-40 w-40 aspect-square "/>
                     }
                     <div className="flex flex-col w-full justify-between">
-                        <div className="flex flex-row w-full justify-between">
-                            <div className="flex flex-col">
+                        <div className="flex flex-col"><div className="flex flex-row w-full justify-between">
+                            <div className="flex flex-col w-full">
                                 {meetup? <p className="text-base font-semibold">{meetup.title}</p> :
-                                    <Skeleton className="w-full h-5"/>
+                                    <Skeleton className="w-full h-5 rounded-md px-2"/>
                                 }
                                 {meetup?
                                     <p className="text-xs dark:text-gray-400">{meetup.description}</p> :
-                                    <Skeleton className="w-full h-3"/>
+                                    <Skeleton className="w-full h-3 mt-1 rounded-md px-2"/>
                                 }
                             </div>
                             {creator?
                                 <Avatar isBordered radius="sm" src="https://i.pravatar.cc/150?u=a042581f4e29026024d" className="w-6 h-6 text-tiny"  />
-                                : <Skeleton className="rounded-full w-6 h-6" />
+                                : <Skeleton className="rounded-full w-6 h-6 ml-2" />
                             }
                         </div>
-                        <Divider className=""/>
+                            <Divider className="mt-1"/>
+                        </div>
+
                         <div className="flex flex-row w-full justify-end">
                             <Button color="primary" variant="flat" className="mr-2">
                                 <p>Edit</p>
