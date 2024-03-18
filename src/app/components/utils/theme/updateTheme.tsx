@@ -14,7 +14,7 @@ export default function useUserTheme() : [string, React.Dispatch<React.SetStateA
             }
             setTheme(userTheme);
         }
-    }, [userTheme]);
+    }, [userTheme, setTheme]);
 
     return [userTheme, setUserTheme];
 }

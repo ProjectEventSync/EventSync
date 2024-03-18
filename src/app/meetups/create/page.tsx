@@ -7,7 +7,7 @@ import CreateMeetupStep1 from "@/app/components/create-meetup/createMeetupStep1"
 import CreateMeetupStep2 from "@/app/components/create-meetup/createMeetupStep2";
 import CreateMeetupStep3 from "@/app/components/create-meetup/createMeetupStep3";
 
-export default function Notifications() {
+export default function CreateMeetup() {
     const [step, setStep] = useState(1);
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");

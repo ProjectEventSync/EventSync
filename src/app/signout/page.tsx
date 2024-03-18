@@ -8,6 +8,6 @@ export default function Signout() {
     useEffect(() => {
         Cookies.remove('token');
         router.push('/login');
-    }, []);
+    }, [router]);
     return <div></div>;
 }

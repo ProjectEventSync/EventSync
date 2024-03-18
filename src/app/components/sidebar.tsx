@@ -1,3 +1,4 @@
+"use client";
 import { BellIcon } from "@heroicons/react/24/outline";
 import { Squares2X2Icon } from "@heroicons/react/24/outline";
 import { MapIcon } from "@heroicons/react/24/outline";
@@ -6,7 +7,7 @@ import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { User } from "@/types";
 import UserTooltip from "@/app/components/userTooltip";
 import {useState} from "react";
-import { Skeleton } from "@nextui-org/react";
+import { Skeleton, Accordion, AccordionItem, Image } from "@nextui-org/react";
 import {useRouter} from "next/navigation";
 
 export default function Sidebar({ active, user } : { active: string, user: User | null}) {
@@ -22,19 +23,19 @@ export default function Sidebar({ active, user } : { active: string, user: User 
     }
 
     return (
-        <aside className=" hidden md:block relative justify-between lg:justify-normal h-screen w-24 flex-shrink-0 flex flex-col lg:w-64 border-r border:neutral-200 dark:border-neutral-800 bg-stone-50 dark:bg-gray-950">
+        <aside className=" md:block relative justify-between lg:justify-normal h-screen w-24 flex-shrink-0 flex flex-col lg:w-64 border-r border:neutral-200 dark:border-neutral-800 bg-stone-50 dark:bg-gray-950">
            <div className="p-2">
                <div className="block lg:hidden dark:hidden">
-                   <img src="/sm-logo.png" className="w-20 h-20"/>
+                   <Image src="/sm-logo.png" alt="eventsync" className="w-20 h-20"/>
                </div>
                <div className="hidden lg:block dark:hidden">
-                    <img src="/lg-logo.png" className=""/>
+                    <Image alt="eventsync" src="/lg-logo.png" className=""/>
                </div>
                <div className="hidden dark:lg:block">
-                     <img src="/lg-dark-logo.png" className="w-56 h-56"/>
+                     <Image alt="eventsync" src="/lg-dark-logo.png" className="w-56 h-56"/>
                </div>
                <div className="hidden dark:block dark:lg:hidden ">
-                   <img src="/sm-dark-logo.png" className="w-20 h-20"/>
+                   <Image alt="eventsync" src="/sm-dark-logo.png" className="w-20 h-20"/>
                </div>
            </div>
             <div>
@@ -84,7 +85,7 @@ export default function Sidebar({ active, user } : { active: string, user: User 
 
 
             <div className="lg:absolute lg:bottom-0 border-t p-4 justify-center flex flex-row border-neutral-200 dark:border-neutral-800 w-full max-h-18 dark:bg-neutral-900 bg-neutral-100">
-                { user? <img src={user.avatar} onClick={showUserTooltip} className="w-10 h-10 rounded-full hover:opacity-90"/>
+                { user? <Image alt={user.username} src={user.avatar} onClick={showUserTooltip} className="w-10 h-10 rounded-full hover:opacity-90"/>
                     : <Skeleton className="w-10 h-10 rounded-full"/>
                 }
                 <div className="hidden lg:block ml-4 flex flex-col h-full overflow-ellipsis">

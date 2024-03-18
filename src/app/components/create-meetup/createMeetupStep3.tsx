@@ -15,7 +15,7 @@ export default function CreateMeetupStep3(){
                     <input type="radio" id="private" name="attendees" value="private"/>
                     <label htmlFor="private" className="ml-2 dark:text-white">Private</label>
                 </div>
-                <Button color="primary" className="mt-2 w-full">Continue</Button>
+                <Button color="primary" className="mt-2 w-full">Create</Button>
             </div>
         </div>
     )
