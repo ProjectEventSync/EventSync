@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import { Session } from "@/types";
-import Cookies from "js-cookie";
+import Cookies from 'js-cookie';
 
 export default function useSession(){
     const [session, setSession] = useState<Session>(new Session(null, null)); // session = userID

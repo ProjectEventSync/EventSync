@@ -4,7 +4,6 @@ import Sidebar from "../components/sidebar";
 import MeetupCard from "@/app/components/meetupCard";
 import {Meetup, defaultMeetup, User, defaultUser, AppNotification} from "@/types";
 import {useEffect, useState} from "react";1
-import Cookies from "js-cookie";
 import {useRouter} from "next/navigation";
 import {ScrollShadow, Input} from "@nextui-org/react";
 import {MagnifyingGlassIcon, PlusIcon} from "@heroicons/react/24/solid";

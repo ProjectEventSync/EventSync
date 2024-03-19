@@ -1,9 +1,9 @@
 "use client";
 import { useState } from 'react';
 import { ArrowLongRightIcon, AtSymbolIcon, UserCircleIcon, LockClosedIcon } from "@heroicons/react/24/solid";
-import useTheme from "@/app/components/utils/theme/updateTheme";
 import {useRouter} from "next/navigation";
-import Cookies from "js-cookie";
+import Cookies from 'js-cookie';
+import useTheme from "@/app/components/utils/theme/updateTheme";
 
 export default function Signup() {
     const [email, setEmail] = useState('');
