@@ -2,7 +2,7 @@
 
 import {NextUIProvider} from '@nextui-org/react'
 import {ThemeProvider as NextThemesProvider} from "next-themes";
-import {useRouter} from "next/navigation";
+import {useRouter} from "next13-progressbar";
 import { Next13ProgressBar } from 'next13-progressbar';
 export function Providers({children}: { children: React.ReactNode }) {
     const router = useRouter();

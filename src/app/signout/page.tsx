@@ -1,7 +1,7 @@
 'use client';
 import Cookies from 'js-cookie';
 import {useEffect} from "react";
-import {useRouter} from "next/navigation";
+import {useRouter} from "next13-progressbar";
 
 export default function Signout() {
     const router = useRouter();

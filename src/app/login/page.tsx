@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { UserCircleIcon, EyeIcon, EyeSlashIcon, LockClosedIcon, ArrowLongRightIcon } from "@heroicons/react/24/solid";
 import useTheme from "@/app/components/utils/theme/updateTheme";
 import Cookies from 'js-cookie';
-import { useRouter } from "next/navigation";
+import { useRouter } from "next13-progressbar";
 import {Button} from "@nextui-org/react";
 
 

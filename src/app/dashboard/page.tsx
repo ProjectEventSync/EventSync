@@ -11,6 +11,7 @@ import useUserTheme from "@/app/components/utils/theme/updateTheme";
 import {Button} from "@nextui-org/react";
 import useSession from "@/app/components/utils/sessionProvider";
 import NotificationCard from "@/app/components/notification";
+import fetchData from './fetchData';
 
 
 
@@ -30,106 +31,9 @@ export default function Dashboard() {
     // Get TOKEN from cookie
     const { session, status } = useSession();
 
-    if (status == "done" && loadingUser) {
-
-        setLoadingUser(false);
-        fetch(`/api/user/${session.userID}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${session.token}`
-            }
-        }).then((data) => {
-            data.json().then((user) => {
-                setUser(user);
-                setKnownUsers((prev) => [...prev, user]);
-                setUserTheme(user.theme);
-            });
-        });
-    } else if (status == "error") {
-        router.push('/login');
-    }
-
-    if (user && loadingNotifications) {
-
-        setLoadingNotifications(false);
-        setNotifications([]);
-
-
-
-        if (!user.notifications) {
-            return;
-        }
-        user.notifications.forEach((notificationID) => {
-            fetch(`/api/notification/${notificationID}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${session.token}`
-                }
-            }).then((res) => {
-                res.json().then((notification) => {
-                    setNotifications((prev) => [...prev, notification]);
-                    if (notification.initiator) {
-                        if (knownUsers.find((user) => user._id == notification.initiator)) {
-                            return;
-                        }
-                        fetch(`/api/user/${notification.initiator}`, {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${session.token}`
-                            }
-                        }).then((res) => {
-                            res.json().then((initiator) => {
-                                setKnownUsers((prev) => [...prev, initiator]);
-                            });
-                        });
-                    }
-
-                });
-            });
-        });
-    }
-
-    if (user && loadingMeetups) {
-        setLoadingMeetups(false);
-        setMeetups([]);
-
-        if (!user.meetups) {
-            return;
-        }
-        user.meetups.forEach((meetupID) => {
-            fetch(`/api/meetup/${meetupID}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${session.token}`
-                }
-            }).then((res) => {
-                res.json().then((meetup) => {
-
-                    setMeetups((prev) => [...prev, meetup]);
-                    if (knownUsers.find((user) => user._id == meetup.creator)) {
-                        return;
-                    }
-                    fetch(`/api/user/${meetup.creator}`, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${session.token}`
-                        }
-                    }).then((res) => {
-                        res.json().then((creator) => {
-                            setKnownUsers((prev) => [...prev, creator]);
-                        });
-                    });
-                });
-            });
-        });
-
-
-    }
+    useEffect(() => {
+        fetchData({status, setLoadingUser, setLoadingMeetups, setLoadingNotifications, loadingUser, session, setUser, setKnownUsers, setUserTheme, user, loadingNotifications, setNotifications, knownUsers, loadingMeetups, setMeetups, router});
+    }, [session, setUserTheme, knownUsers, router, status, user, loadingUser, loadingMeetups, loadingNotifications]);
 
 
     return (

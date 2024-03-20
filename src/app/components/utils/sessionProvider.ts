@@ -1,3 +1,4 @@
+"use client";
 import {useEffect, useState} from "react";
 import { Session } from "@/types";
 import Cookies from 'js-cookie';
@@ -5,14 +6,13 @@ import Cookies from 'js-cookie';
 export default function useSession(){
     const [session, setSession] = useState<Session>(new Session(null, null)); // session = userID
     const [status, setStatus] = useState<'loading' | 'done' | 'error'>('loading');
+    const token = Cookies.get('token');
 
     useEffect(() => {
-        const token = Cookies.get('token');
         if (!token) {
             setStatus('error');
             return;
         }
-
         fetch('/api/auth/verify', {
             method: 'GET',
             headers: {
@@ -31,7 +31,7 @@ export default function useSession(){
             });
         });
 
-    }, []);
+    }, [token]);
 
     return {session, status};
 }

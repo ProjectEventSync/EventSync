@@ -1,7 +1,7 @@
 "use client";
 import { useState } from 'react';
 import { ArrowLongRightIcon, AtSymbolIcon, UserCircleIcon, LockClosedIcon } from "@heroicons/react/24/solid";
-import {useRouter} from "next/navigation";
+import {useRouter} from "next13-progressbar";
 import Cookies from 'js-cookie';
 import useTheme from "@/app/components/utils/theme/updateTheme";
 
