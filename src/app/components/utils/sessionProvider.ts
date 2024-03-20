@@ -8,7 +8,6 @@ export default function useSession(){
 
     useEffect(() => {
         const token = Cookies.get('token');
-
         if (!token) {
             setStatus('error');
             return;

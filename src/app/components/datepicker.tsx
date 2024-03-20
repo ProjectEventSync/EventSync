@@ -11,7 +11,7 @@ import {
     PopoverTrigger,
 } from "@nextui-org/react"
 
-export default function DatePicker({date, setDate} : {date: Date, setDate: Function}){
+export default function DatePicker({date, setDate} : {date: Date, setDate: any}){
 
     return (
         <Popover>
