@@ -1,6 +1,6 @@
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import {User} from "@/types";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next13-progressbar';
 
 export default function UserTooltip({ hideTooltip, user } : { hideTooltip: () => void, user: User }){
     const router = useRouter();

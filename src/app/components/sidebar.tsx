@@ -8,8 +8,7 @@ import { User } from "@/types";
 import UserTooltip from "@/app/components/userTooltip";
 import {useState} from "react";
 import { Skeleton, Accordion, AccordionItem, Image } from "@nextui-org/react";
-import {useRouter} from "next/navigation";
-
+import { useRouter } from 'next13-progressbar';
 export default function Sidebar({ active, user } : { active: string, user: User | null}) {
     let [tooltip, setTooltip] = useState(false);
     const router = useRouter();
@@ -23,7 +22,7 @@ export default function Sidebar({ active, user } : { active: string, user: User 
     }
 
     return (
-        <aside className=" md:block relative justify-between lg:justify-normal h-screen w-24 flex-shrink-0 flex flex-col lg:w-64 border-r border:neutral-200 dark:border-neutral-800 bg-stone-50 dark:bg-gray-950">
+        <aside className=" md:block relative justify-between h-screen w-24 flex-shrink-0 flex flex-col lg:w-64 border-r border:neutral-200 dark:border-neutral-800 bg-stone-50 dark:bg-gray-950">
            <div className="p-2">
                <div className="block lg:hidden dark:hidden">
                    <Image src="/sm-logo.png" alt="eventsync" className="w-20 h-20"/>

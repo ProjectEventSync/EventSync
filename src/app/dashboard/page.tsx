@@ -3,8 +3,8 @@
 import Sidebar from "../components/sidebar";
 import MeetupCard from "@/app/components/meetupCard";
 import {Meetup, defaultMeetup, User, defaultUser, AppNotification} from "@/types";
-import {useEffect, useState} from "react";1
-import {useRouter} from "next/navigation";
+import {useEffect, useState} from "react";
+import { useRouter } from 'next13-progressbar';
 import {ScrollShadow, Input} from "@nextui-org/react";
 import {MagnifyingGlassIcon, PlusIcon} from "@heroicons/react/24/solid";
 import useUserTheme from "@/app/components/utils/theme/updateTheme";
@@ -137,7 +137,7 @@ export default function Dashboard() {
             <Sidebar user={user} active="dashboard"/>
             <div className="flex flex-row h-full w-full">
                 <div className="w-2/3 lg:h-full flex flex-col">
-                    <div className="flex flex-row items-center justify-between p-4 border-b dark:border-stone-800 dark:bg-stone-950">
+                    <div className="flex flex-row items-center justify-between p-4 border-b bg-white dark:border-stone-800 dark:bg-stone-950">
                         <p className="dark:text-white text-2xl font-bold">Meetups</p>
                         <div className="flex flex-row space-x-4">
                             <Input
@@ -157,8 +157,8 @@ export default function Dashboard() {
                         ))}
                         </div>
                 </div>
-                <div className="w-1/3 lg:h-full border-l dark:border-stone-800 dark:bg-stone-950 flex flex-col">
-                    <p className="dark:text-white text-lg font-bold border-b dark:border-stone-800 p-4">Notifications</p>
+                <div className="w-1/3 lg:h-full border-l dark:border-stone-800 dark:bg-stone-950 bg-stone-50 flex flex-col">
+                    <p className="dark:text-white text-2xl flex text-center font-bold bg-white dark:bg-transparent border-b dark:border-stone-800 p-4 py-5">Notifications</p>
                     <div className="flex flex-col w-full p-4">
                         { notifications.map((notification, index) => (
                             <NotificationCard notification={notification} meetup={notification?.meetup? meetups.find((meetup) => meetup?._id == notification.meetup) || null : null} initiator={notification?.initiator ? knownUsers.find((user) => user._id == notification.initiator) || null : null} key={index}/>

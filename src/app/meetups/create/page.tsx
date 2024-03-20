@@ -11,7 +11,7 @@ export default function CreateMeetup() {
     const [step, setStep] = useState(1);
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [date, setDate] = useState("");
+    const [date, setDate] = useState<Date>(new Date());
     const [time, setTime] = useState("");
     const [location, setLocation] = useState("");
 
