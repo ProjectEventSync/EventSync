@@ -1,4 +1,5 @@
 "use client";
+require("dotenv").config({ path: ".env.local" });
 import { useState } from 'react';
 import { ArrowLongRightIcon, AtSymbolIcon, UserCircleIcon, LockClosedIcon } from "@heroicons/react/24/solid";
 import {useRouter} from "next13-progressbar";
@@ -17,6 +18,7 @@ export default function Signup() {
     const [code, setCode] = useState('');
     const [verificationError, setVerificationError] = useState('');
     const [verificationCode, setVerificationCode] = useState('');
+    const [userID, setUserID] = useState('');
     const router = useRouter();
 
     const handleSubmit = (e: { preventDefault: () => void; }) => {
@@ -45,6 +47,7 @@ export default function Signup() {
                     } else {
                         // Redirect to dashboard
                         Cookies.set('token', data.token);
+                        setUserID(data.id);
                         setShowVerification(true);
                         fetchVerificationCode();
                     }
@@ -52,7 +55,7 @@ export default function Signup() {
             });
     };
     function fetchVerificationCode(){
-        fetch('http://localhost:3001/send-verification-email', {
+        fetch(process.env.REACT_APP_MAIL_URL + '/send-verification-email', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -74,7 +77,14 @@ export default function Signup() {
             setVerificationError('Invalid verification code');
             return;
         }
+        fetch(`/api/user/${userID}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ "$set" : { verified: true } }),
 
+        });
         router.push('/dashboard');
     }
 

@@ -10,6 +10,7 @@ interface UserParams {
     avatar?: string;
     notifications?: string[];
     theme?: "light" | "dark" | "system";
+    verified?: boolean;
 }
 
 class User {
@@ -21,8 +22,9 @@ class User {
     avatar: string; // URL to the user's avatar
     notifications: string[]; // Array of notification ids
     theme: "light" | "dark" | "system" = "system"; // User's preferred theme
+    verified: boolean; // Whether the user has verified their email
 
-    constructor({username, email, password, meetups, _id, avatar, notifications, theme}: UserParams) {
+    constructor({username, email, password, meetups, _id, avatar, notifications, theme, verified}: UserParams) {
         this._id = _id ? _id : generateSnowflake();
         this.username = username;
         this.email = email;
@@ -31,6 +33,7 @@ class User {
         this.avatar = avatar ? avatar : "https://www.gravatar.com/avatar/";
         this.notifications = notifications ? notifications : [];
         this.theme = theme? theme : "system";
+        this.verified = verified ? verified : false;
     }
 
     // Converts a User instance to a JSON object
@@ -43,7 +46,8 @@ class User {
             meetups: this.meetups,
             avatar: this.avatar,
             notifications: this.notifications,
-            theme: this.theme
+            theme: this.theme,
+            verified: this.verified
         };
     }
 }
