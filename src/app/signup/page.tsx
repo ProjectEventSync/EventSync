@@ -4,6 +4,7 @@ import { ArrowLongRightIcon, AtSymbolIcon, UserCircleIcon, LockClosedIcon } from
 import {useRouter} from "next13-progressbar";
 import Cookies from 'js-cookie';
 import useTheme from "@/app/components/utils/theme/updateTheme";
+import VerificationPage from "@/app/signup/verificationPage";
 
 export default function Signup() {
     const [email, setEmail] = useState('');
@@ -12,6 +13,10 @@ export default function Signup() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [theme, setTheme] = useTheme();
     const [error, setError] = useState('');
+    const [showVerification, setShowVerification] = useState(false);
+    const [code, setCode] = useState('');
+    const [verificationError, setVerificationError] = useState('');
+    const [verificationCode, setVerificationCode] = useState('');
     const router = useRouter();
 
     const handleSubmit = (e: { preventDefault: () => void; }) => {
@@ -40,13 +45,42 @@ export default function Signup() {
                     } else {
                         // Redirect to dashboard
                         Cookies.set('token', data.token);
-                        router.push('/dashboard')
+                        setShowVerification(true);
+                        fetchVerificationCode();
                     }
                 });
             });
     };
+    function fetchVerificationCode(){
+        fetch('http://localhost:3001/send-verification-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email }),
+        }).then((res) => {
+            res.json().then((data) => {
+                if (data.error) {
+                    setVerificationError(data.error);
+                } else {
+                    setVerificationCode(data.message);
+                }
+            });
+        });
+    }
 
+    function submit() {
+        if (code !== verificationCode) {
+            setVerificationError('Invalid verification code');
+            return;
+        }
 
+        router.push('/dashboard');
+    }
+
+    if (showVerification){
+        return (<VerificationPage setCode={setCode} submit={submit} error={verificationError}></VerificationPage>)
+    }
     return (
         <div className="flex justify-center items-center h-screen font-inter">
             <div className="w-[450px] p-6">

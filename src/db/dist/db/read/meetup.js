@@ -48,7 +48,7 @@ function getMeetup(meetupID) {
                 case 0: return [4 /*yield*/, connect_1.db.collection('meetups')];
                 case 1:
                     meetups = _a.sent();
-                    return [4 /*yield*/, meetups.findOne({ id: meetupID })];
+                    return [4 /*yield*/, meetups.findOne({ _id: meetupID })];
                 case 2:
                     meetup = _a.sent();
                     if (!meetup) {

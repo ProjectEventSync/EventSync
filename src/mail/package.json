@@ -1,0 +1,19 @@
+{
+  "name": "eventsync-mail",
+  "version": "1.0.0",
+  "description": "Handles mail for eventsync",
+  "main": "server.js",
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "author": "EventSync",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.1",
+    "http": "^0.0.1-security",
+    "https": "^1.0.0",
+    "nodemailer": "^6.9.13"
+  }
+}

@@ -20,7 +20,7 @@ var Meetup = /** @class */ (function () {
     // Converts a Meetup instance to a JSON object
     Meetup.prototype.toJSON = function () {
         return {
-            id: this._id,
+            _id: this._id,
             title: this.title,
             creator: this.creator,
             description: this.description,

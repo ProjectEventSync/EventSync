@@ -67,7 +67,7 @@ function createNotification(notification) {
                 case 1: return [4 /*yield*/, (0, user_1.updateUser)(notification.receiver, { "$push": { "notifications": notification._id } })];
                 case 2:
                     _b.sent();
-                    _b.label = 3;
+                    return [3 /*break*/, 8];
                 case 3: return [4 /*yield*/, (0, meetup_1.getMeetup)(notification.meetup)];
                 case 4:
                     meetup_2 = _b.sent();
@@ -78,7 +78,7 @@ function createNotification(notification) {
                             return;
                         (0, user_1.updateUser)(attendee, { "$push": { "notifications": notification._id } });
                     });
-                    _b.label = 5;
+                    return [3 /*break*/, 8];
                 case 5: return [4 /*yield*/, (0, meetup_1.getMeetup)(notification.meetup)];
                 case 6:
                     meetup2 = _b.sent();
@@ -87,9 +87,10 @@ function createNotification(notification) {
                     meetup2.attendees.forEach(function (attendee) {
                         (0, user_1.updateUser)(attendee, { "$push": { "notifications": notification._id } });
                     });
-                    _b.label = 7;
-                case 7: return [4 /*yield*/, notifications.insertOne(notification.toJSON())];
-                case 8: return [2 /*return*/, _b.sent()];
+                    return [3 /*break*/, 8];
+                case 7: return [3 /*break*/, 8];
+                case 8: return [4 /*yield*/, notifications.insertOne(notification.toJSON())];
+                case 9: return [2 /*return*/, _b.sent()];
             }
         });
     });
